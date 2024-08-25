@@ -122,63 +122,150 @@
 //}
 //===================================
 //Task 3
+//#include <iostream>
+//using namespace std;
+//
+//class Account {
+//	string id;
+//	string name;
+//	int balance;
+//public:
+//	Account(string id,string name) {
+//		this->id = id;
+//		this->name = name;
+//		balance = 0;
+//	}
+//	Account(string id,string name,int balance) {
+//		this->id = id;
+//		this->name = name;
+//		this->balance = balance;
+//	}
+//	string getID() {
+//		return id;
+//	}
+//	string getName() {
+//		return name;
+//	}
+//	int getBalance() {
+//		return balance;
+//	}
+//	int credit(int amount) {
+//		balance += amount;
+//		return balance;
+//	}
+//	int debit(int amount) {
+//		balance -= amount;
+//		return amount;
+//	}
+//	void transferTo(Account &account, int amount) {
+//		if (amount <= balance) {
+//			balance -= amount;
+//			account.balance += amount;
+//		}
+//		else {
+//			cout << "Amount exceeded balance" << endl;
+//		}
+//		
+//	}
+//};
+// 
+//int main() {
+//	Account acc1("192712", "Nehal");
+//	cout <<"Account 1: " << acc1.getID() << " " << acc1.getName()<< " " << acc1.getBalance() << endl;
+//	cout << "==================" << endl;
+//	Account acc2("192712", "Nehal",1000);
+//	cout << "Account 2: " << acc2.getID() << " " << acc2.getName() << " " << acc2.getBalance() << endl;
+//	acc2.debit(100);
+//	cout << "Account 2 After Debit: " << acc2.getBalance()<<endl;
+//	acc2.credit(200);
+//	cout << "Account 2 After Credit: " << acc2.getBalance()<<endl;
+//	acc2.transferTo(acc1, 1000);
+//	cout << "Account 1 After Transfer: " << acc1.getBalance()<<endl;
+//	return 0;
+//}
+//==================================
 #include <iostream>
 using namespace std;
 
-class Account {
-	string id;
-	string name;
-	int balance;
+class Time {
+	int hour;
+	int minute;
+	int second;
 public:
-	Account(string id,string name) {
-		this->id = id;
-		this->name = name;
-		balance = 0;
+	Time(int hour, int minute, int second) {
+		this->hour = hour;
+		this->minute = minute;
+		this->second = second;
 	}
-	Account(string id,string name,int balance) {
-		this->id = id;
-		this->name = name;
-		this->balance = balance;
+	int getHour() {
+		return hour;
 	}
-	string getID() {
-		return id;
+	int getMinute() {
+		return minute;
 	}
-	string getName() {
-		return name;
+	int getSecond() {
+		return second;
 	}
-	int getBalance() {
-		return balance;
+	void setHour(int hour) {
+		this->hour = hour;
 	}
-	int credit(int amount) {
-		balance += amount;
-		return balance;
+	void setMinute(int minute) {
+		this->minute = minute;
 	}
-	int debit(int amount) {
-		balance -= amount;
-		return amount;
+	void setSecond(int second) {
+		this->second = second;
 	}
-	void transferTo(Account &account, int amount) {
-		if (amount <= balance) {
-			balance -= amount;
-			account.balance += amount;
-		}
-		else {
-			cout << "Amount exceeded balance" << endl;
+	void setTime(int hour, int minute, int second) {
+		this->hour = hour;
+		this->minute = minute;
+		this->second = second;
+	}
+	Time nextSecond() {
+		second++;
+		if (second == 60) {
+			
+			second = 0;
+			minute++;
+			if (minute == 60) {
+				minute = 0;
+				hour++;
+				if (hour == 24) {
+					hour = 0;
+				}
+			}
 		}
 		
+		return Time(hour, minute, second);
+	}
+	Time previousSecond() {
+		second--;
+		if (second == -1) {
+			second = 59;
+			minute--;
+			if (minute == -1) {
+				minute = 59;
+				hour--;
+				if (hour == -1) {
+					hour = 23;
+				}
+				
+			}
+			
+		
+			
+		}
+		
+		
+		return Time(hour, minute, second);
 	}
 };
+
 int main() {
-	Account acc1("192712", "Nehal");
-	cout <<"Account 1: " << acc1.getID() << " " << acc1.getName()<< " " << acc1.getBalance() << endl;
-	cout << "==================" << endl;
-	Account acc2("192712", "Nehal",1000);
-	cout << "Account 2: " << acc2.getID() << " " << acc2.getName() << " " << acc2.getBalance() << endl;
-	acc2.debit(100);
-	cout << "Account 2 After Debit: " << acc2.getBalance()<<endl;
-	acc2.credit(200);
-	cout << "Account 2 After Credit: " << acc2.getBalance()<<endl;
-	acc2.transferTo(acc1, 1000);
-	cout << "Account 1 After Transfer: " << acc1.getBalance()<<endl;
+	Time t1(4, 59, 59);
+	t1.nextSecond();
+	cout << "T1  " << t1.getHour() << " : " << t1.getMinute() << " : " << t1.getSecond() <<endl;
+	Time t2(4, 0, 0);
+	t2.previousSecond();
+	cout << "T2 " << t2.getHour() << " : " << t2.getMinute() << " : " << t2.getSecond() << endl;
 	return 0;
 }

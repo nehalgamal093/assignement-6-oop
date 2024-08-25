@@ -61,62 +61,124 @@
 //}
 //===================================
 //Task 2
+//#include <iostream>
+//using namespace std;
+//
+//class Employee {
+//	int id;
+//	string firstName;
+//	string lastName;
+//	int salary;
+//
+//public:
+//	Employee(int id, string firstName, string lastName, int salary) {
+//		this->id = id;
+//		this->firstName = firstName;
+//		this->lastName = lastName;
+//		this->salary = salary;
+//	}
+//	int getID() {
+//		return id;
+//	}
+//	string getFirstName() {
+//		return firstName;
+//	}
+//	string getLastName() {
+//		return lastName;
+//	}
+//	string getName() {
+//		return firstName + " " + lastName;
+//	}
+//	int getSalary() {
+//		return salary;
+//	}
+//	void setSalary(int salary) {
+//		if (salary > 100000) {
+//			this->salary = salary;
+//		}
+//	}
+//	int getAnnualSalary() {
+//		return salary * 12;
+//	}
+//	int raiseSalary(int percent) {
+//		int raise = (salary * percent) / 100;
+//		int salaryAfterRaise = salary + raise;
+//		return salaryAfterRaise;
+//	}
+//};
+//int main() {
+//	Employee emp1(1234, "Nehal", "Gamal", 10000000);
+//	cout << "Employee 1 ID: " << emp1.getID() << endl;
+//	cout << "Employee 1 Name: " << emp1.getName() << endl;
+//	cout << "Employee 1 Salary: " << emp1.getSalary() << endl;
+//	cout << "Employee 1 Annual Salary: " << emp1.getAnnualSalary() << endl;
+//	cout << "Employee 1 Salary After Raise: " << emp1.raiseSalary(50) << endl;
+//	cout << "-------------------" << endl;
+//
+//	emp1.setSalary(2000000);
+//	cout << "Employee 1 Salary: " << emp1.getSalary() << endl;
+//	cout << "Employee 1 Salary After Raise: " << emp1.raiseSalary(50) << endl;
+//	return 0;
+//}
+//===================================
+//Task 3
 #include <iostream>
 using namespace std;
 
-class Employee {
-	int id;
-	string firstName;
-	string lastName;
-	int salary;
-
+class Account {
+	string id;
+	string name;
+	int balance;
 public:
-	Employee(int id, string firstName, string lastName, int salary) {
+	Account(string id,string name) {
 		this->id = id;
-		this->firstName = firstName;
-		this->lastName = lastName;
-		this->salary = salary;
+		this->name = name;
+		balance = 0;
 	}
-	int getID() {
+	Account(string id,string name,int balance) {
+		this->id = id;
+		this->name = name;
+		this->balance = balance;
+	}
+	string getID() {
 		return id;
 	}
-	string getFirstName() {
-		return firstName;
-	}
-	string getLastName() {
-		return lastName;
-	}
 	string getName() {
-		return firstName + " " + lastName;
+		return name;
 	}
-	int getSalary() {
-		return salary;
+	int getBalance() {
+		return balance;
 	}
-	void setSalary(int salary) {
-		if (salary > 100000) {
-			this->salary = salary;
+	int credit(int amount) {
+		balance += amount;
+		return balance;
+	}
+	int debit(int amount) {
+		balance -= amount;
+		return amount;
+	}
+	void transferTo(Account &account, int amount) {
+		if (amount <= balance) {
+			balance -= amount;
+			account.balance += amount;
 		}
-	}
-	int getAnnualSalary() {
-		return salary * 12;
-	}
-	int raiseSalary(int percent) {
-		int raise = (salary * percent) / 100;
-		int salaryAfterRaise = salary + raise;
-		return salaryAfterRaise;
+		else {
+			cout << "Amount exceeded balance" << endl;
+		}
+		
 	}
 };
 int main() {
-	Employee emp1(1234, "Nehal", "Gamal", 10000000);
-	cout << "Employee 1 ID: " << emp1.getID() << endl;
-	cout << "Employee 1 Name: " << emp1.getName() << endl;
-	cout << "Employee 1 Salary: " << emp1.getSalary() << endl;
-	cout << "Employee 1 Annual Salary: " << emp1.getAnnualSalary() << endl;
-	cout << "Employee 1 Salary After Raise: " << emp1.raiseSalary(50) << endl;
-	cout << "-------------------" << endl;
-
-	emp1.setSalary(2000000);
-	cout << "Employee 1 Salary: " << emp1.getSalary() << endl;
-	cout << "Employee 1 Salary After Raise: " << emp1.raiseSalary(50) << endl;
+	Account acc1("192712", "Nehal");
+	cout <<"Account 1: " << acc1.getID() << " " << acc1.getName()<< " " << acc1.getBalance() << endl;
+	cout << "==================" << endl;
+	Account acc2("192712", "Nehal",1000);
+	cout << "Account 2: " << acc2.getID() << " " << acc2.getName() << " " << acc2.getBalance() << endl;
+	acc2.debit(100);
+	cout << "Account 2 After Debit: " << acc2.getBalance()<<endl;
+	acc2.credit(200);
+	cout << "Account 2 After Credit: " << acc2.getBalance()<<endl;
+	acc2.transferTo(acc1, 1000);
+	cout << "Account 1 After Transfer: " << acc1.getBalance()<<endl;
 	return 0;
 }
